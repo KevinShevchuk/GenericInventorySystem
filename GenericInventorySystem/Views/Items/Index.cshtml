@@ -1,0 +1,67 @@
+﻿@model GenericInventorySystem.Models.ItemManufacturerViewModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Product List</h1>
+
+<p>When acquiring a product for the first time, add its details to this page. This allows the Inventory to keep track of it.</p>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-controller="Items" asp-action="Index" method="get">
+    <p>
+        Manufacturer: <select asp-for="ItemManufacturer" asp-items="Model.Manufacturers">
+            <option value="">All</option>
+        </select>
+
+        Product Name: <input type="text" name="searchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Manufacturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].ManufacturerProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].PricePerUnit)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufacturerProductCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerUnit)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
